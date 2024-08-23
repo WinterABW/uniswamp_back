@@ -1,0 +1,15 @@
+{
+  "name": "axltbot-backend",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "start": "npm install && node bot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "telegraf": "^4.16.3"
+  }
+}
