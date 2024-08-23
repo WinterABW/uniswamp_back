@@ -10,14 +10,13 @@ const bot = new Telegraf(token);
 
 bot.start((ctx) => {
   ctx.reply(
-    `👛 Receive, send, store, play and win with cryptocurrencies at any time.
-    Learn more › (https://t.me/UniSwapNew/18)
-    Join our channel (http://t.me/UniSwapNew) 
-    and our chat (http://t.me/UniSwaptips).`,
+    `👛 Receive, send, store, play and win with cryptocurrencies at any time.\n` +
+    `Join our channel and our chat.`,
     Markup.inlineKeyboard([
       [Markup.button.url("Let´s Play!!!", botApp)],
-      [Markup.button.callback("Button 2", "btn_2")],
-      [Markup.button.callback("Button 3", "btn_3")],
+      [Markup.button.url("Learn more", "https://t.me/UniSwapNew/18"), Markup.button.url("Our channel", "http://t.me/UniSwapNew")],
+      [Markup.button.url("Our chat", "http://t.me/UniSwaptips"), Markup.button.callback("Button 3", "btn_3")],
+      [Markup.button.callback("Button 2", "btn_2")]
     ])
   );
 });
