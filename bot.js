@@ -29,7 +29,7 @@ bot.start((ctx) => {
 });
 
 bot.action("connect", (ctx) => {
-  ctx.reply("In progress...");
+  ctx.reply("⏳ In progress...");
 });
 
 bot.launch();
