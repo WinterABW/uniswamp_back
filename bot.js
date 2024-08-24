@@ -11,7 +11,8 @@ bot.start((ctx) => {
     {
       caption:
         `👏 Minting a new beginning on [Telegram](https://t.me/durov)\n\n` +
-        ` We announce the official launch of the Mini App version of UniSwap.org.`,
+        ` We announce the official launch of the Mini App version of UniSwap.org.\n\n` +
+        `💡 To open click on the following button.`,
       parse_mode: "Markdown",
       ...Markup.inlineKeyboard([
         [Markup.button.url("🦄 Mini App", botApp)],
