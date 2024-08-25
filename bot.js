@@ -1,4 +1,5 @@
 const { Telegraf, Markup } = require("telegraf");
+const http = require("http");
 const path = require("path");
 const { token, botApp, chanel, suportt, twitter } = require("./urls.json");
 
@@ -33,4 +34,18 @@ bot.action("connect", (ctx) => {
 });
 
 bot.launch();
-console.log("Bot is running...");
+
+const server = http.createServer((req, res) => {
+  if (req.method === "GET" && req.url === "/status") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Bot is running...");
+  } else {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Not Found");
+  }
+});
+
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
